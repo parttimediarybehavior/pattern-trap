@@ -302,6 +302,23 @@ describe("explanations", () => {
     }
   });
 
+  it("a correct persistent pick is described by its rule, even when the reveal reverses (seed s168)", () => {
+    const r = createRound("s168");
+    expect(r.type).toBe("persistent");
+    expect(r.specialIndex).toBe(3);
+    const c = r.charts[3];
+    if (c.rule.kind !== "persistent") throw new Error("expected persistent");
+    // The drift is downward, but the revealed continuation happened to go up.
+    expect(c.rule.drift).toBeLessThan(0);
+    expect(c.points[TOTAL_STEPS] - c.points[VISIBLE_STEPS]).toBeGreaterThan(0);
+
+    const rv = createGame("s168").lockIn(3);
+    expect(rv.judgement.correct).toBe(true);
+    expect(rv.judgement.outcome).toBe("hit");
+    expect(rv.explanation.headline).toBe("Right. Chart D had a persistent drift.");
+    expect(rv.explanation.headline).not.toMatch(/kept going/);
+  });
+
   it("noise-move odds behave sensibly", () => {
     expect(chanceNoiseMovesThisFar(0)).toBeCloseTo(1, 6);
     expect(chanceNoiseMovesThisFar(100)).toBeLessThan(1e-6);

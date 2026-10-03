@@ -73,7 +73,7 @@ export function explain(round: Round, j: Judgement): Explanation {
   let headline: string;
   switch (j.outcome) {
     case "hit":
-      headline = `Right. ${Name(special!)} kept going.`;
+      headline = `Right. ${Name(special!)} had a persistent drift.`;
       break;
     case "miss":
       headline = `Missed it. ${Name(special!)} had a steady drift.`;

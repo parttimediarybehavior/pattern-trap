@@ -2,7 +2,7 @@
 
 A small browser game about spotting patterns, and getting fooled by noise.
 
-You see nine short charts. Maybe one of them has a real trend that will keep going. Maybe one *had* a trend that already ran out. Maybe they are all noise. Pick a chart, or say "No persistent pattern". Then watch the next 40 steps and see how every chart was actually made.
+You see nine short charts. Maybe one of them has a real, lasting trend. Maybe one *had* a trend that already ran out. Maybe they are all noise. Pick a chart, or say "No persistent pattern". Then watch the next 40 steps and see how every chart was actually made.
 
 The point is to make **selection bias** something you feel: when you look at nine random lines, one of them will look like it's going somewhere, and the most dramatic chart is not usually the real one.
 
@@ -10,10 +10,10 @@ No accounts, no analytics, no network calls, no backend. It is a static site. Th
 
 ## Play locally
 
-Requires Node 18 or newer.
+Requires Node 24 (the current LTS; `.nvmrc` pins it and Vercel reads `engines.node`). With nvm: `nvm use`.
 
 ```bash
-npm install
+npm ci
 npm run dev        # http://localhost:5173
 ```
 
@@ -48,7 +48,9 @@ The repo deploys as-is. `vercel.json` sets the Vite build, the `dist` output, an
 - **Dashboard:** push to GitHub, then *Add New → Project → Import*. The defaults are correct; no environment variables are needed.
 - **CLI:** `npx vercel` (preview) then `npx vercel --prod`.
 
-Any other static host works too. Serve `dist/` after `npm run build`.
+Vercel uses Node 24 from `package.json` `engines`. Any other static host works too. Serve `dist/` after `npm run build`.
+
+GitHub Actions (`.github/workflows/ci.yml`) runs `npm ci` and `npm run check` on every push and pull request, with read-only permissions.
 
 ## How it works
 
@@ -118,6 +120,10 @@ This is a teaching toy, not a model of any real data.
 - **Shared scale.** All nine charts share one vertical scale, so sizes are comparable. The scale widens during the reveal if the continuation leaves the original range.
 - **Float reproducibility.** Seeds fix round type, positions, directions and windows exactly. Chart values depend on `Math.log`/`Math.cos`, which browsers may round differently in the last bits, so a value may differ around the 15th decimal place. That is invisible on screen.
 - **Not secret.** The generator is in the page, so anyone with the seed and the source can compute the answer. It is a game, not a test.
+
+## License
+
+[MIT](LICENSE) © 2026 mothwake. Development tools (Vite, Vitest, jsdom, TypeScript) are used only to build and test the site. They are not part of `dist/` and keep their own licenses in `node_modules/`. The built site bundles no third-party code.
 
 ## Not included
 
