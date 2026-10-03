@@ -1,0 +1,23 @@
+{
+  "name": "pattern-trap",
+  "private": true,
+  "version": "0.1.0",
+  "description": "A small browser game about spotting patterns — and getting fooled by noise.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "check": "npm test && npm run build"
+  },
+  "devDependencies": {
+    "jsdom": "^24.1.3",
+    "typescript": "~5.6.3",
+    "vite": "^5.4.21",
+    "vitest": "^2.1.9"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
